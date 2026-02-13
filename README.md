@@ -1,3 +1,5 @@
+Mod template for MIO with ImGui implementation
+
 # mio-mod-template
 A mod template for MIO: Memories in Orbit
 

@@ -30,5 +30,3 @@ vcpkg_installed/
 
 # Custom
 .vscode/
-include/*
-lib/*
