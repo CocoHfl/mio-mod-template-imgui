@@ -171,7 +171,7 @@ DWORD WINAPI RendererThread(LPVOID)
         return 0;
 
     g_OverlayHWND = CreateWindowExA(
-        WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW,
+        WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE,
         wc.lpszClassName,
         "Overlay",
         WS_POPUP,
