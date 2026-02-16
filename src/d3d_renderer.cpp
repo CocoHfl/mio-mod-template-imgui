@@ -118,14 +118,12 @@ static void ToggleOverlay(bool& overlayActive)
         exStyle &= ~WS_EX_TRANSPARENT;
 		SetForegroundWindow(g_OverlayHWND);
         SetFocus(g_OverlayHWND);
-        while (ShowCursor(TRUE) < 0);
     }
     else
     {
         exStyle |= WS_EX_TRANSPARENT;
         SetForegroundWindow(g_GameHWND);
         SetFocus(g_GameHWND);
-        while (ShowCursor(FALSE) >= 0);
     }
 
     SetWindowLong(g_OverlayHWND, GWL_EXSTYLE, exStyle);
@@ -171,7 +169,7 @@ DWORD WINAPI RendererThread(LPVOID)
         return 0;
 
     g_OverlayHWND = CreateWindowExA(
-        WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE,
+        WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW,
         wc.lpszClassName,
         "Overlay",
         WS_POPUP,
@@ -189,6 +187,8 @@ DWORD WINAPI RendererThread(LPVOID)
         UnregisterClass(wc.lpszClassName, wc.hInstance);
         return 0;
     }
+
+    SetLayeredWindowAttributes(g_OverlayHWND, RGB(0, 0, 0), 255, LWA_ALPHA);
 
     MARGINS margins = { -1, -1, -1, -1 };
     DwmExtendFrameIntoClientArea(g_OverlayHWND, &margins);
@@ -210,7 +210,6 @@ DWORD WINAPI RendererThread(LPVOID)
     MSG msg = {};
     bool overlayActive = false;
     SetForegroundWindow(g_GameHWND);
-    while (ShowCursor(FALSE) >= 0);
 
     while (g_Running && msg.message != WM_QUIT)
     {
