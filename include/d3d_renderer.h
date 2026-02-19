@@ -11,4 +11,5 @@ extern HWND g_OverlayHWND;
 extern HWND g_GameHWND;
 extern bool g_Running;
 
+bool IsKeyPressedInGame(int vkCode);
 DWORD WINAPI RendererThread(LPVOID param);

@@ -20,6 +20,15 @@ bool g_Running = true;
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+bool IsKeyPressedInGame(int vkCode)
+{
+    HWND foreground = GetForegroundWindow();
+    bool isFocused = (foreground == g_GameHWND || foreground == g_OverlayHWND);
+    bool keyPressed = (GetAsyncKeyState(vkCode) & 1) != 0;
+
+    return isFocused && keyPressed;
+}
+
 static bool CreateDeviceD3D(HWND hwnd)
 {
     DXGI_SWAP_CHAIN_DESC sd = {};
@@ -226,7 +235,8 @@ DWORD WINAPI RendererThread(LPVOID)
         else
             ShowWindow(g_OverlayHWND, SW_HIDE);
 
-        if (GetAsyncKeyState(VK_INSERT) & 1)
+        // Toggle overlay interaction with INSERT key
+        if (IsKeyPressedInGame(VK_INSERT))
         {
             ToggleOverlay(overlayActive);
         }
