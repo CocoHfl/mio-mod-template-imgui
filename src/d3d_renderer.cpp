@@ -219,6 +219,13 @@ DWORD WINAPI RendererThread(LPVOID)
             DispatchMessage(&msg);
         }
 
+		// Show overlay only when game or overlay is focused
+        HWND foreground = GetForegroundWindow();
+        if (foreground == g_GameHWND || foreground == g_OverlayHWND)
+            ShowWindow(g_OverlayHWND, SW_SHOW);
+        else
+            ShowWindow(g_OverlayHWND, SW_HIDE);
+
         if (GetAsyncKeyState(VK_INSERT) & 1)
         {
             ToggleOverlay(overlayActive);
