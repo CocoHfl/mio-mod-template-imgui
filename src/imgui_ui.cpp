@@ -44,6 +44,10 @@ void RenderUI()
     if (ImGui::Button("Teleport to 0, 0, 0"))
         SetPlayerLocation(make_f32x3(0, 0, 0));
 
+    // Example hotkey
+    if (IsKeyPressedInGame('P'))
+        LogMessage("Pressed P key");
+
     ImGui::Separator();
     ImGui::TextDisabled("Press INSERT to toggle interaction with UI");
 
