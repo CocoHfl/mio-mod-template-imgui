@@ -7,6 +7,8 @@
 
 void InitializeUI()
 {
+    ImGui_ImplWin32_EnableDpiAwareness();
+
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
 
@@ -34,14 +36,16 @@ void RenderUI()
     ImGui::SetNextWindowBgAlpha(1.0f);
     ImGui::Begin("Mod", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
+    // Add your mod UI content here
+    // Example using modding API:
     f32x3 loc = GetPlayerLocation();
-
     ImGui::Text("Player location: %.2f, %.2f, %.2f", loc.x, loc.y, loc.z);
 
     if (ImGui::Button("Teleport to 0, 0, 0"))
         SetPlayerLocation(make_f32x3(0, 0, 0));
 
-	ImGui::Text("Press INSERT to toggle interaction with UI");
+    ImGui::Separator();
+    ImGui::TextDisabled("Press INSERT to toggle interaction with UI");
 
     ImGui::End();
 
